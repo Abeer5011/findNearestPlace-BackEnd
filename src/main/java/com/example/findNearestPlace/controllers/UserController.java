@@ -1,4 +1,5 @@
 package com.example.findNearestPlace.controllers;
+import com.example.findNearestPlace.modals.ApiResponse;
 import com.example.findNearestPlace.modals.MyUser;
 import com.example.findNearestPlace.services.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -32,11 +33,10 @@ public class UserController {
         String hashedPassword= new BCryptPasswordEncoder().encode(myUser.getPassword());
         myUser.setPassword(hashedPassword);
         userService.register(myUser);
-        HashMap hashMap = new HashMap();
-        hashMap.put("message", "user registered");
-        return ResponseEntity.status(HttpStatus.CREATED).body(hashMap);
+
+        return ResponseEntity.status(HttpStatus.CREATED).body(new ApiResponse("user registered", 201));
     }
-    @PostMapping("login")
+    @PostMapping("/login")
     public ResponseEntity login(HttpSession session){
 
         HashMap hashMap=new HashMap();
